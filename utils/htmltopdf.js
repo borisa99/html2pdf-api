@@ -3,19 +3,22 @@ const path = require("path");
 const pdf = require("html-pdf");
 const options = require("./pdfConfig");
 
-const create = async () => {
+const create = async (fileName) => {
   try {
     const html = fs
-      .readFileSync(path.resolve(__dirname, "test.html"), "utf8")
+      .readFileSync(path.resolve(__dirname, "../temp", fileName), "utf8")
       .toString("utf8");
-    const pdfFile = await pdf.create(html, options);
-    pdfFile.toFile("./uploads/test.pdf", function (err, buffer) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("PDF created");
-      }
-    });
+    await pdf
+      .create(html, options)
+      .toFile(
+        path.resolve(__dirname, "../uploads", `${fileName.split(".")[0]}.pdf`),
+        (err, res) => {
+          if (err) {
+            console.log(err);
+          }
+          fs.unlinkSync(path.resolve(__dirname, "../temp", fileName));
+        }
+      );
   } catch (error) {
     throw new Error(error);
   }
