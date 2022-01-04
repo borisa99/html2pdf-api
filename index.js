@@ -9,7 +9,6 @@ app.use(express.static(__dirname + "/uploads"));
 
 app.post("/api/html-to-pdf", async (req, res) => {
   try {
-    console.log(req.body);
     const response = await create();
     res.status(200).json(response);
   } catch (error) {
