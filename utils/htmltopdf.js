@@ -3,7 +3,7 @@ const path = require("path");
 const pdf = require("html-pdf");
 const options = require("./pdfConfig");
 
-const create = async (fileName) => {
+const create = async (fileName, pdfFileName) => {
   try {
     const html = fs
       .readFileSync(path.resolve(__dirname, "../temp", fileName), "utf8")
@@ -11,7 +11,7 @@ const create = async (fileName) => {
     await pdf
       .create(html, options)
       .toFile(
-        path.resolve(__dirname, "../uploads", `${fileName.split(".")[0]}.pdf`),
+        path.resolve(__dirname, "../uploads", pdfFileName),
         (err, res) => {
           if (err) {
             console.log(err);

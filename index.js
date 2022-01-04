@@ -10,8 +10,10 @@ app.use(express.static(__dirname + "/uploads"));
 
 app.post("/api/html-to-pdf", upload, async (req, res) => {
   try {
-    await create(req.fileName);
-    res.send("success");
+    const pdfFileName = `${req.fileName.split(".")[0]}.pdf`;
+
+    await create(req.fileName, pdfFileName);
+    res.send(pdfFileName);
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
