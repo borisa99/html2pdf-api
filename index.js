@@ -10,7 +10,7 @@ app.use(express.static(__dirname + "/uploads"));
 app.post("/api/html-to-pdf", async (req, res) => {
   try {
     const fileName = "invoice-" + JSON.stringify(Date.now()) + ".pdf";
-    await ejs2PDF(fileName);
+    await ejs2PDF(fileName, req.body);
     res.send(fileName);
   } catch (error) {
     res.status(500).send("Internal Server Error");

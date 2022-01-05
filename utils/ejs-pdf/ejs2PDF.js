@@ -3,27 +3,7 @@ const pdf = require("html-pdf");
 const ejs = require("ejs");
 
 // Generate html invoice
-const ejs2PDF = (
-  fileName,
-  ejsData = {
-    name: "Vajofirma",
-    address: "Stefana Nemanje 47",
-    email: "vajo@mail.com",
-    date_of_invoice: "02.02.2020",
-    due_date: "02.02.2020",
-    invoice_number: "123456789",
-    description: "2 krmka",
-    from_to: "02.02.2020-02.02.2020",
-    unit: "2405",
-    qty: "2",
-    price: "2405",
-    subtotal: "4810",
-    total: "4810",
-    discount_in_percent: "0",
-    discount_value: "0",
-    grand_total: "4810",
-  }
-) => {
+const ejs2PDF = (fileName, ejsData) => {
   // Read ejs file
   fs.readFile(__dirname + "/invoice.ejs", "utf8", async (err, data) => {
     if (err) {
