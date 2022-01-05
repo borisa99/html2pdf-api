@@ -46,6 +46,7 @@ const invoiceCalculate = async (requestData) => {
   const total = parseFloat(subtotal - discount).toFixed(2);
 
   const pdfData = {
+    ...requestData,
     name: clients_by_pk.company,
     address: clients_by_pk.address,
     email: clients_by_pk.invoice_email,
