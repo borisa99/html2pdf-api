@@ -10,7 +10,7 @@ const { GET_CLIENT } = require("../../graphql/client/client.queries");
 const invoiceCalculate = async (requestData) => {
   // Get invoice items
   const { invoice_items } = await graphQlClient.request(GET_INVOICE_ITEMS, {
-    invoice_id: requestData.invoice_id,
+    invoice_id: requestData.id,
   });
 
   // Get client
@@ -20,14 +20,14 @@ const invoiceCalculate = async (requestData) => {
 
   // Transform requestData to pdfData
   // Calculate total for each item
-  const items = requestData.items.map((item, index) => {
+  const items = invoice_items.map((item, index) => {
     return {
       index: index + 1,
-      name: item.name,
-      description: item.description,
-      quantity: item.quantity,
-      price: item.price,
-      total: parseFloat(item.price * item.quantity).toFixed(2),
+      name: item.notes,
+      description: item.notes,
+      quantity: item.qty,
+      price: item.cost,
+      total: parseFloat(item.cost * item.qty).toFixed(2),
     };
   });
   // Calculate subtotal
@@ -38,15 +38,21 @@ const invoiceCalculate = async (requestData) => {
   ).toFixed(2);
 
   // Calculate discount based on percentage value
-  const discount = parseFloat(
-    (subtotal * requestData.discount_in_percent) / 100
-  ).toFixed(2);
+  const discount = parseFloat((subtotal * requestData.discount) / 100).toFixed(
+    2
+  );
 
   // Calculate total with discount
   const total = parseFloat(subtotal - discount).toFixed(2);
 
   const pdfData = {
-    ...requestData,
+    name: clients_by_pk.company,
+    address: clients_by_pk.address,
+    email: clients_by_pk.invoice_email,
+    date_of_invoice: requestData.date_of_invoice,
+    due_date: requestData.due_date,
+    invoice_number: requestData.invoice_number,
+    discount_in_percent: requestData.discount,
     items,
     subtotal,
     discount,
@@ -69,7 +75,7 @@ const ejs2PDF = async (fileName, requestData) => {
     const template = ejs.compile(ejs_string);
     const html = template(pdfData);
     // Generate pdf
-    await generatePdf(fileName, requestData.email, html);
+    await generatePdf(fileName, pdfData.email, html);
   });
 };
 
