@@ -54,11 +54,11 @@ const ejs2PDF = (fileName, ejsData) => {
     const template = ejs.compile(ejs_string);
     const html = template(invoiceCalculate(ejsData));
     // Generate pdf
-    await generatePdf(fileName, html);
+    await generatePdf(fileName, ejsData.email, html);
   });
 };
 
-const generatePdf = (fileName, html) => {
+const generatePdf = (fileName, email, html) => {
   // Generate pdf and save it in uploads folder
   pdf
     .create(html, {
@@ -73,7 +73,7 @@ const generatePdf = (fileName, html) => {
       await emailClient.send({
         template: "invoice",
         message: {
-          to: "a@mail.b",
+          to: email,
           headers: {},
           attachments: [
             {
