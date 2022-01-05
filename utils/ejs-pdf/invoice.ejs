@@ -254,19 +254,17 @@
           </tr>
         </thead>
         <tbody>
+          <% items.forEach((item,index)=> { %>
           <tr>
-            <td class="no">01</td>
-            <td class="desc">
-              <h3><%= description %></h3>
-              <a
-                href="https://tracker.toptal.com/app/reports?start=2020-01-01&amp;end=2021-11-08&amp;workers=255233-243918-235202-238860-246047-243881-241631-258039-260085-255088-237196-252849-261058-238619-253786-237195-234306-237227-256360-239996-248939-237813-237732-237200-241831-259864-237235-245800-259859-260276-252711-249616-237198&amp;projects=748706&amp;chart=workers&amp;table=work-summary&amp;grouping=projects"
-                ><%= from_to %></a
-              >
+            <td class="no"><%= parseInt(index) + 1 %></td>
+            <td class="desc"><%= item.description %></td>
+            <td class="unit">€<%= item.price %></td>
+            <td class="qty"><%= item.quantity %></td>
+            <td class="total">
+              €<%= parseFloat(item.price * item.quantity).toFixed(2) %>
             </td>
-            <td class="unit">€<%= unit %></td>
-            <td class="qty"><%= qty %></td>
-            <td class="total">€<%= total %></td>
           </tr>
+          <% }); %>
         </tbody>
         <tfoot>
           <tr>
