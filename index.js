@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { create } = require("./utils/html-pdf/htmlToPDF");
+const { ejs2PDF } = require("./utils/ejs-pdf/ejs2PDF");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -9,10 +9,10 @@ app.use(express.static(__dirname + "/uploads"));
 
 app.post("/api/html-to-pdf", async (req, res) => {
   try {
-    await create();
-    res.send("DOOBAR");
+    const fileName = "invoice-" + JSON.stringify(Date.now()) + ".pdf";
+    await ejs2PDF(fileName);
+    res.send(fileName);
   } catch (error) {
-    console.log("🚀 ~ file: index.js ~ line 15 ~ app.post ~ error", error);
     res.status(500).send("Internal Server Error");
   }
 });
