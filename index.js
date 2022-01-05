@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const { ejs2PDF } = require("./utils/ejs-pdf/ejs2PDF");

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const pdf = require("html-pdf");
 const ejs = require("ejs");
+const { emailClient } = require("../../shared/email");
 
 // Generate html invoice
 const ejs2PDF = (fileName, ejsData) => {
@@ -28,9 +29,24 @@ const generatePdf = (fileName, html) => {
         top: "5mm",
       },
     })
-    .toFile(`./uploads/${fileName}`, function (err, res) {
+    .toFile(`./uploads/${fileName}`, async (err, res) => {
       if (err) return console.log(err);
-      console.log(res);
+      //Send email
+      await emailClient.send({
+        template: "invoice",
+        message: {
+          to: "a@mail.b",
+          headers: {},
+          attachments: [
+            {
+              filename: fileName,
+              path: res.filename,
+              contentType: "application/pdf",
+            },
+          ],
+        },
+        locals: {},
+      });
     });
 };
 
