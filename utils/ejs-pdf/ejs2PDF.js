@@ -59,6 +59,7 @@ const invoiceCalculate = async (requestData) => {
     subtotal,
     discount,
     total,
+    server_url: process.env.SERVER_URL,
   };
   return pdfData;
 };
@@ -83,7 +84,14 @@ const ejs2PDF = async (fileName, requestData) => {
 
 const generatePdf = (fileName, pdfData, html) => {
   // Generate pdf and save it in uploads folder
-  const { email, name, discount_in_percent, invoice_number, balance } = pdfData;
+  const {
+    email,
+    name,
+    discount_in_percent,
+    invoice_number,
+    balance,
+    server_url,
+  } = pdfData;
   pdf
     .create(html, {
       format: "A4",
@@ -107,6 +115,7 @@ const generatePdf = (fileName, pdfData, html) => {
           invoice_number,
           balance,
           fileName,
+          server_url,
         },
       });
     });
