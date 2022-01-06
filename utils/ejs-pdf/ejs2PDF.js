@@ -54,6 +54,7 @@ const invoiceCalculate = async (requestData) => {
     due_date: requestData.due_date,
     invoice_number: requestData.invoice_number,
     discount_in_percent: requestData.discount,
+    balance: requestData.balance,
     items,
     subtotal,
     discount,
@@ -82,7 +83,7 @@ const ejs2PDF = async (fileName, requestData) => {
 
 const generatePdf = (fileName, pdfData, html) => {
   // Generate pdf and save it in uploads folder
-  const { email, name, discount_in_percent } = pdfData;
+  const { email, name, discount_in_percent, invoice_number, balance } = pdfData;
   pdf
     .create(html, {
       format: "A4",
@@ -98,17 +99,14 @@ const generatePdf = (fileName, pdfData, html) => {
         message: {
           to: email,
           headers: {},
-          attachments: [
-            {
-              filename: fileName,
-              path: res.filename,
-              contentType: "application/pdf",
-            },
-          ],
+          attachments: [],
         },
         locals: {
           name,
           discount_in_percent,
+          invoice_number,
+          balance,
+          fileName,
         },
       });
     });

@@ -291,8 +291,8 @@
                             text-align: left;
                           "
                         >
-                          To view and download your invoice(s) for
-                          {{ balance }}, click the button below.
+                          To view and download your invoice(s) for <%= balance
+                          %>, click the button below.
                         </div>
                       </td>
                     </tr>
@@ -346,26 +346,32 @@
                               "
                               valign="middle"
                             >
-                              <p
-                                style="
-                                  display: inline-block;
-                                  background: #00d857;
-                                  color: #ffffff;
-                                  font-family: Ubuntu, Helvetica, Arial,
-                                    sans-serif;
-                                  font-size: 13px;
-                                  font-weight: 500;
-                                  line-height: 120%;
-                                  margin: 0;
-                                  text-decoration: none;
-                                  text-transform: uppercase;
-                                  padding: 10px 25px;
-                                  mso-padding-alt: 0px;
-                                  border-radius: 3px;
-                                "
+                              <a
+                                href="http://localhost:3000/<%= fileName %>"
+                                target="_blank"
+                                download
                               >
-                                Download PDF / Pay
-                              </p>
+                                <p
+                                  style="
+                                    display: inline-block;
+                                    background: #00d857;
+                                    color: #ffffff;
+                                    font-family: Ubuntu, Helvetica, Arial,
+                                      sans-serif;
+                                    font-size: 13px;
+                                    font-weight: 500;
+                                    line-height: 120%;
+                                    margin: 0;
+                                    text-decoration: none;
+                                    text-transform: uppercase;
+                                    padding: 10px 25px;
+                                    mso-padding-alt: 0px;
+                                    border-radius: 3px;
+                                  "
+                                >
+                                  Download PDF / Pay
+                                </p>
+                              </a>
                             </td>
                           </tr>
                         </table>
