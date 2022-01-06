@@ -248,7 +248,7 @@
                             color: #d84166;
                           "
                         >
-                          Hey {{ first_name }}
+                          <%= name %>
                         </div>
                       </td>
                     </tr>
@@ -439,22 +439,31 @@
                                       color: #59506f;
                                     "
                                   >
-                                    {{If discount < 1}}Fancy up to
-                                    <span style="font-weight: bold"
-                                      >up to 12% discount</span
+                                    <% if(discount_in_percent < 1){ %>
+                                    <span
+                                      >Fancy up to
+                                      <span style="font-weight: bold"
+                                        >up to 12% discount</span
+                                      >
+                                      on your next invoices? See our
+                                      <a
+                                        href="https://crewnew.com/social-media-campaign"
+                                        >Social Media Campaign</a
+                                      >
+                                      and reply to this email when done.</span
                                     >
-                                    on your next invoices? See our
-                                    <a
-                                      href="https://crewnew.com/social-media-campaign"
-                                      >Social Media Campaign</a
+                                    <% } %> <% if(discount_in_percent > 0){ %>
+                                    <span
+                                      >Your invoice has
+                                      <span style="font-weight: bold">
+                                        <%= discount_in_percent %> %
+                                        discount</span
+                                      >
+                                      on it. Please, do pay the invoice before
+                                      the due date to retain the discounted
+                                      price.</span
                                     >
-                                    and reply to this email when done.
-                                    {{If discount > 0}}Your invoice has
-                                    <span style="font-weight: bold"
-                                      >{{ discount }}}}% discount</span
-                                    >
-                                    on it. Please, do pay the invoice before the
-                                    due date to retain the discounted price.
+                                    <% } %>
                                   </div>
                                   <!--[if mso | IE]>
               </td>

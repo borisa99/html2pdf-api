@@ -76,12 +76,13 @@ const ejs2PDF = async (fileName, requestData) => {
     const template = ejs.compile(ejs_string);
     const html = template(pdfData);
     // Generate pdf
-    await generatePdf(fileName, pdfData.email, html);
+    await generatePdf(fileName, pdfData, html);
   });
 };
 
-const generatePdf = (fileName, email, html) => {
+const generatePdf = (fileName, pdfData, html) => {
   // Generate pdf and save it in uploads folder
+  const { email, name, discount_in_percent } = pdfData;
   pdf
     .create(html, {
       format: "A4",
@@ -105,7 +106,10 @@ const generatePdf = (fileName, email, html) => {
             },
           ],
         },
-        locals: {},
+        locals: {
+          name,
+          discount_in_percent,
+        },
       });
     });
 };
